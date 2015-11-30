@@ -3,17 +3,15 @@ import java.util.Iterator;
 
 public class LinkedListIterator<E> implements Iterator<E>
 {
-	private LinkedList<E> link;
-	private int index;
+	private ListNode<E> curr;
 	
 	/**
 	* Constructor for VectorIterator
 	* @param Vector<E> that will be iterated over
 	*/
-	public LinkedListIterator(LinkedList<E> v)
+	public LinkedListIterator(ListNode<E> head)
 	{
-		link = v;
-		index = 0;
+		curr = head;
 	}
 	
 	/**
@@ -21,11 +19,11 @@ public class LinkedListIterator<E> implements Iterator<E>
 	*/
 	public boolean hasNext()
 	{
-		if(index >= link.size())
+		if(curr != null)
 		{
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	/**
@@ -33,12 +31,13 @@ public class LinkedListIterator<E> implements Iterator<E>
 	*/
 	public E next()
 	{
-		if(index >= link.size())
+		if(curr == null)
 		{
-			throw new NoSuchElementException("You are looking to iterate into spot: " + index + " and the size of the vector is " + link.size());
+			throw new NoSuchElementException();
 		}
-		index++;
-		return link.get(index-1);
+		E hold = curr.getItem();
+		curr = curr.getNext();
+		return hold;
 	}
 	
 	/**
@@ -46,10 +45,6 @@ public class LinkedListIterator<E> implements Iterator<E>
 	*/
 	public void remove()
 	{
-		if(index-1 < 0 || index-1 >= link.size())
-		{
-			throw new NoSuchElementException("You are looking to remove spot: " + (index-1) + " and the size of the vector is " + link.size());
-		}
-		link.remove(index-1);
+		
 	}
 }
